@@ -1,11 +1,7 @@
-# LONG TERM: 2001-2085; repeated average weather; established stand.
-# Run from the repository root (set it as your RStudio working directory).
-# install.packages("r3PG") # Once, if needed.
+
+# install.packages("r3PG") 
 if (!requireNamespace("r3PG", quietly = TRUE)) stop("Install r3PG first")
 library(r3PG)
-if (as.character(packageVersion("r3PG")) != "0.1.6") stop("Use verified r3PG 0.1.6 or revalidate")
-dir.create("outputs", showWarnings = FALSE)
-dir.create("figures", showWarnings = FALSE)
 
 # Difference of consecutive annual standing stocks; first value is missing.
 calculate_increment <- function(volume) {
@@ -27,7 +23,7 @@ pine_climate <- aggregate(d_climate[, climate_columns],
                           by = list(month = d_climate$month), FUN = mean)
 pine_climate <- pine_climate[order(pine_climate$month), ]
 stopifnot(nrow(pine_climate) == 12, all(pine_climate$month == 1:12))
-write.csv(pine_climate, "outputs/repeated_monthly_climate.csv", row.names = FALSE)
+write.csv(pine_climate, "repeated_monthly_climate.csv", row.names = FALSE)
 
 settings <- list(light_model = 2, transp_model = 2, phys_model = 2,
                  height_model = 1, correct_bias = 0, calculate_d13c = 0)
@@ -66,22 +62,17 @@ rownames(annual) <- NULL
 # Arithmetic checks; these are not ecological validation against observations.
 stopifnot(identical(calculate_increment(c(100, 110, 106)), c(NA_real_, 10, -4)),
           abs(sqrt(40000 * (pi * 10) / (pi * 1000)) - 20) < 1e-10)
-write.csv(monthly, paste0("outputs/", analysis_name, "_monthly.csv"), row.names = FALSE)
-write.csv(annual, paste0("outputs/", analysis_name, "_annual.csv"), row.names = FALSE, na = "")
-saveRDS(list(site = pine_site, species = pine_species, climate = pine_climate,
-             parameters = pine_parameters, size_dist = pine_sizeDist,
-             settings = settings, thinning = NULL),
-        paste0("outputs/", analysis_name, "_inputs.rds"))
-dir.create("outputs/inputs", showWarnings = FALSE)
+write.csv(monthly, paste0(analysis_name, "_monthly.csv"), row.names = FALSE)
+write.csv(annual, paste0(analysis_name, "_annual.csv"), row.names = FALSE, na = "")
 input_tables <- list(site = pine_site, species = pine_species, climate = pine_climate,
                      parameters = pine_parameters, size_dist = pine_sizeDist)
 for (nm in names(input_tables)) {
-  write.csv(input_tables[[nm]], paste0("outputs/inputs/", analysis_name, "_", nm, ".csv"),
+  write.csv(input_tables[[nm]], paste0(" analysis_name, "_", nm, ".csv"),
             row.names = FALSE)
 }
 capture.output(sessionInfo(), file = paste0("outputs/", analysis_name, "_sessionInfo.txt"))
 
-# Simple reusable plotting function, defined here to keep this script standalone.
+# plotting function
 green <- "#176B5B"; blue <- "#2E65A7"; orange <- "#B65B26"
 plot_panel <- function(x, y, title, ylab, color = green, xlab = "Stand age (years)") {
   plot(x, y, type = "n", main = title, xlab = xlab, ylab = ylab,
@@ -94,7 +85,7 @@ plot_panel <- function(x, y, title, ylab, color = green, xlab = "Stand age (year
 peak_row <- which.max(annual$MAI_standing_m3_ha_yr)
 peak <- annual[peak_row, ]
 peak$interior_peak <- peak_row > 1 && peak_row < nrow(annual)
-write.csv(peak, "outputs/mai_peak.csv", row.names = FALSE, na = "")
+write.csv(peak, "mai_peak.csv", row.names = FALSE, na = "")
 
 # CAI is assigned to its year-end; it is a preceding-year interval change,
 # not an instantaneous derivative. Crossing and sampled MAI peak may differ.
@@ -103,9 +94,9 @@ n <- nrow(annual)
 i <- which(is.finite(gap[-n]) & is.finite(gap[-1]) & gap[-n] > 0 & gap[-1] <= 0)
 crossings <- data.frame(age_from = annual$age[i], age_to = annual$age[i + 1],
                         year_from = annual$year[i], year_to = annual$year[i + 1])
-write.csv(crossings, "outputs/cai_mai_crossings.csv", row.names = FALSE)
+write.csv(crossings, "cai_mai_crossings.csv", row.names = FALSE)
 
-png("figures/02_long_term_cai_mai.png", width = 1900, height = 1100, res = 170)
+png("02_long_term_cai_mai.png", width = 1900, height = 1100, res = 170)
 par(mfrow = c(1, 2), mar = c(4.8, 5.2, 3.5, 1), oma = c(3, 0, 3, 0))
 plot_panel(annual$age, annual$volume, "Standing volume", "Volume (m3/ha)")
 abline(v = peak$age, col = orange, lty = 3)
@@ -125,7 +116,7 @@ mtext(sprintf("Peak standing-volume MAI: %.2f m3/ha/year at model age %.1f", pea
 mtext("Repeated average weather | established initial stand | illustrative, unvalidated projection", outer = TRUE, side = 1, line = 1.4, cex = .8)
 dev.off()
 
-png("figures/03_long_term_stand_structure.png", width = 1800, height = 1050, res = 170)
+png("03_long_term_stand_structure.png", width = 1800, height = 1050, res = 170)
 par(mfrow = c(1, 2), mar = c(4.8, 5.2, 3.5, 1), oma = c(2, 0, 2, 0))
 plot_panel(annual$age, annual$stems_n, "Living stem density", "Stems/ha")
 plot_panel(annual$age, annual$qmd_cm, "Quadratic mean diameter", "QMD (cm)", blue)
