@@ -69,24 +69,6 @@ Stem density remains at 800 stems/ha throughout the long-term run. At the sample
 
 This project does not reconstruct the stand's pre-2001 removals or mortality. Consequently, standing volume divided by age is not a reconstruction of total-production MAI. There is no calibration, independent validation, forecast interval, or financial rotation analysis. The results do not demonstrate that a 120-year rotation is appropriate for a real stand.
 
-## Reproduce
-
-The scripts use base R and `r3PG` only. Each script is self-contained; no helper file needs to be sourced.
-
-1. Install `r3PG` with `install.packages("r3PG")`. Included results were generated with version **0.1.6** using R 4.4.3.
-2. Open the repository folder in RStudio and set it as the working directory using **Session > Set Working Directory > Choose Directory**.
-3. Open and run `scripts/01_baseline_growth.R`.
-4. Open and run `scripts/02_long_term_cai_mai.R`.
-
-Alternatively, from the repository root:
-
-```sh
-Rscript scripts/01_baseline_growth.R
-Rscript scripts/02_long_term_cai_mai.R
-```
-
-The scripts recreate the PNG figures, CSV tables, input snapshots, and session records. Figures are saved in `figures/`, rather than only displayed in RStudio. If CRAN has moved beyond version 0.1.6, its source is available in the [CRAN archive](https://cran.r-project.org/src/contrib/Archive/r3PG/); source installation requires an appropriate Fortran toolchain. See the session records for exact dependencies.
-
 ## Verification and next step
 
 Both analyses were executed. Runtime checks require complete monthly coverage, consecutive annual endpoints, unique output dates, finite/nonnegative stocks, and positive age and density. Arithmetic checks confirm a known positive/negative volume increment sequence and the QMD formula. These checks verify calculations and data handling; they do not measure ecological accuracy.
