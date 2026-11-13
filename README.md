@@ -1,10 +1,9 @@
 # Forest growth and yield with r3PG
 
 **Scots pine stand development, annual yield tables, and interpretation of CAI and MAI in R.**
+We applied the existing 3-PG process-based model through `r3PG` to Scots pine (*Pinus sylvestris*). It contains two reproducible analyses: a baseline simulation using the package's weather sequence and a longer simulation exploring the maximum of standing-volume-based mean annual increment.
 
-This project applies the existing 3-PG process-based model through `r3PG` to Scots pine (*Pinus sylvestris*). It contains two reproducible analyses: a baseline simulation using the package's weather sequence and a longer simulation exploring the maximum of standing-volume-based mean annual increment.
-
-The focus is translating monthly model output into useful stand metrics and checking what those metrics support. All inputs come from package examples; no independent inventory observations are used.
+The focus is translating monthly model output into useful stand metrics and checking what those metrics support. All inputs come from package examples (packages:r3pg); no independent inventory observations are used.
 
 ![Baseline Scots pine growth](01_baseline_growth.png)
 
@@ -88,22 +87,6 @@ Rscript scripts/02_long_term_cai_mai.R
 
 The scripts recreate the PNG figures, CSV tables, input snapshots, and session records. Figures are saved in `figures/`, rather than only displayed in RStudio. If CRAN has moved beyond version 0.1.6, its source is available in the [CRAN archive](https://cran.r-project.org/src/contrib/Archive/r3PG/); source installation requires an appropriate Fortran toolchain. See the session records for exact dependencies.
 
-## Repository files
-
-| File or folder | Purpose |
-|---|---|
-| `scripts/01_baseline_growth.R` | Baseline simulation and four-panel growth figure |
-| `scripts/02_long_term_cai_mai.R` | Extended simulation, MAI maximum, crossing intervals and stand structure |
-| `figures/` | Three generated figures embedded above |
-| `outputs/*_annual.csv` | Annual volume, age, CAI, MAI, density, basal area and QMD |
-| `outputs/*_monthly.csv` | Monthly stand metrics |
-| `outputs/mai_peak.csv` | Sampled MAI maximum and interior-peak flag |
-| `outputs/cai_mai_crossings.csv` | All detected downward crossing intervals |
-| `outputs/inputs/` | Readable copies of model input tables |
-| `outputs/*_inputs.rds` | Exact input objects and settings |
-| `outputs/*_sessionInfo.txt` | R and package environment |
-| `docs/validation_plan.md` | Plan for evaluation with repeated inventory measurements |
-
 ## Verification and next step
 
 Both analyses were executed. Runtime checks require complete monthly coverage, consecutive annual endpoints, unique output dates, finite/nonnegative stocks, and positive age and density. Arithmetic checks confirm a known positive/negative volume increment sequence and the QMD formula. These checks verify calculations and data handling; they do not measure ecological accuracy.
@@ -116,4 +99,4 @@ The next research step is evaluation against independent repeated inventory plot
 - Landsberg, J. J., & Waring, R. H. (1997). A generalised model of forest productivity using simplified concepts of radiation-use efficiency, carbon balance and partitioning. *Forest Ecology and Management*, 95, 209-228. [DOI](https://doi.org/10.1016/S0378-1127(97)00026-1).
 - Forrester, D. I., & Tang, X. (2016). Analysing the spatial and temporal dynamics of species interactions in mixed-species forests and the effects of stand density using the 3-PG model. *Ecological Modelling*, 319, 233-254. [DOI](https://doi.org/10.1016/j.ecolmodel.2015.07.010).
 
-The 3-PG model and r3PG implementation are credited to their authors. This repository provides application scripts and interpretation using their example inputs. Scripts and documentation were prepared with AI assistance. Shared under GPL-3; see `LICENSE`.
+The 3-PG model and r3PG implementation are credited to their authors. This repository provides application scripts and interpretation using their example inputs. Used AI assistance to make script more reproducible and readable.
