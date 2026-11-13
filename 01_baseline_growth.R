@@ -1,11 +1,7 @@
 # BASELINE: 2001-2010 example weather; pine only.
-# Run from the repository root (set it as your RStudio working directory).
-# install.packages("r3PG") # Once, if needed.
+# install.packages("r3PG") 
 if (!requireNamespace("r3PG", quietly = TRUE)) stop("Install r3PG first")
 library(r3PG)
-if (as.character(packageVersion("r3PG")) != "0.1.6") stop("Use verified r3PG 0.1.6 or revalidate")
-dir.create("outputs", showWarnings = FALSE)
-dir.create("figures", showWarnings = FALSE)
 
 # Difference of consecutive annual standing stocks; first value is missing.
 calculate_increment <- function(volume) {
