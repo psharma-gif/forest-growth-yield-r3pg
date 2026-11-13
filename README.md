@@ -6,7 +6,7 @@ This project applies the existing 3-PG process-based model through `r3PG` to Sco
 
 The focus is translating monthly model output into useful stand metrics and checking what those metrics support. All inputs come from package examples; no independent inventory observations are used.
 
-![Baseline Scots pine growth: volume, diameter, basal area and annual increment](figures/01_baseline_growth.png)
+![Baseline Scots pine growth](01_baseline_growth.png)
 
 ## Questions
 
@@ -28,7 +28,7 @@ The focus is translating monthly model output into useful stand metrics and chec
 
 These are simulated values from r3PG 0.1.6, not estimates of observed Scots pine productivity. The long-term MAI maximum is an interior maximum of the annual samples, not an operational harvest recommendation.
 
-![Long-term standing volume and CAI-MAI curves, with sampled MAI maximum](figures/02_long_term_cai_mai.png)
+![Long-term standing volume and CAI-MAI curves](02_long_term_cai_mai.png)
 
 **Interpretation:** the annual net increment eventually falls below standing-volume MAI. The sampled MAI maximum and the crossing interval are close but not identical because CAI is a preceding-year change assigned to the year's endpoint, whereas MAI is an endpoint stock-to-age ratio.
 
@@ -65,8 +65,7 @@ For a smooth yield curve `V(t)`, the derivative of `V(t)/t` is `[t V'(t) - V(t)]
 
 ## Stand structure and model limitations
 
-![Long-term stem density and quadratic mean diameter](figures/03_long_term_stand_structure.png)
-
+![Long-term stem density and quadratic mean diameter](03_long_term_stand_structure.png)
 Stem density remains at 800 stems/ha throughout the long-term run. At the sampled MAI peak, predicted basal area is approximately **95.50 m2/ha**. This high stocking output warrants review of mortality, self-thinning, allometry, site conditions, and parameter applicability before practical use. The smooth yield curve alone is insufficient evidence of realistic stand development.
 
 This project does not reconstruct the stand's pre-2001 removals or mortality. Consequently, standing volume divided by age is not a reconstruction of total-production MAI. There is no calibration, independent validation, forecast interval, or financial rotation analysis. The results do not demonstrate that a 120-year rotation is appropriate for a real stand.
